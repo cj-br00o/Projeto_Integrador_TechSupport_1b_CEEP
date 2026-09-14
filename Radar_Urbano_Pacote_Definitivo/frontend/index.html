@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Protótipo acadêmico do Radar Urbano para registro e acompanhamento de ocorrências urbanas em Maringá.">
+  <title>Radar Urbano | Maringá</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo principal</a>
+
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Radar Urbano — início">
+      <span class="brand-mark" aria-hidden="true">RU</span>
+      <span>
+        <strong>Radar Urbano</strong>
+        <small>Maringá · PR</small>
+      </span>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <a href="#registrar">Registrar</a>
+      <a href="#acompanhar">Acompanhar</a>
+      <a href="#como-funciona">Como funciona</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">Protótipo acadêmico · ODS 9 e 11</span>
+        <h1>Um caminho simples para cuidar melhor da cidade.</h1>
+        <p>
+          Registre problemas urbanos com descrição, localização e fotografia.
+          Acompanhe o andamento pelo protocolo enquanto a equipe responsável
+          organiza o atendimento.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#registrar">Registrar ocorrência</a>
+          <a class="button button-secondary" href="#acompanhar">Consultar protocolo</a>
+        </div>
+      </div>
+
+      <aside class="status-card" aria-label="Fluxo de atendimento">
+        <p class="status-label">Fluxo da ocorrência</p>
+        <ol class="status-list">
+          <li class="active"><span>1</span>Recebida</li>
+          <li><span>2</span>Em análise</li>
+          <li><span>3</span>Encaminhada</li>
+          <li><span>4</span>Em atendimento</li>
+          <li><span>5</span>Resolvida</li>
+        </ol>
+        <p class="status-note">Cada mudança de status fica registrada para acompanhamento.</p>
+      </aside>
+    </section>
+
+    <section class="section" id="registrar">
+      <div class="section-heading">
+        <span class="section-number">01</span>
+        <div>
+          <h2>Registrar uma ocorrência</h2>
+          <p>Preencha as informações necessárias para facilitar a triagem.</p>
+        </div>
+      </div>
+
+      <form class="report-form" aria-describedby="form-note">
+        <div class="field field-wide">
+          <label for="descricao">Descrição do problema</label>
+          <textarea id="descricao" name="descricao" minlength="10" maxlength="2000" rows="5" placeholder="Descreva o que aconteceu e informe um ponto de referência."></textarea>
+          <small>Entre 10 e 2.000 caracteres.</small>
+        </div>
+
+        <div class="field">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="id_categoria">
+            <option value="">Selecione uma categoria</option>
+            <option value="INFRAESTRUTURA">Infraestrutura</option>
+            <option value="ILUMINACAO">Iluminação</option>
+            <option value="TRANSITO">Trânsito</option>
+            <option value="ARBORIZACAO">Arborização</option>
+            <option value="DRENAGEM">Drenagem</option>
+            <option value="CONSERVACAO">Conservação</option>
+            <option value="LIMPEZA_URBANA">Limpeza urbana</option>
+            <option value="SANEAMENTO">Saneamento</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="foto">Fotografia</label>
+          <input id="foto" name="url_arquivo" type="file" accept="image/*">
+        </div>
+
+        <div class="field">
+          <label for="latitude">Latitude</label>
+          <input id="latitude" name="latitude" type="number" min="-90" max="90" step="0.000001" placeholder="Ex.: -23.420999">
+        </div>
+
+        <div class="field">
+          <label for="longitude">Longitude</label>
+          <input id="longitude" name="longitude" type="number" min="-180" max="180" step="0.000001" placeholder="Ex.: -51.933056">
+        </div>
+
+        <div class="form-footer field-wide">
+          <p id="form-note">Demonstração visual: o envio será conectado ao banco de dados na próxima etapa.</p>
+          <button class="button button-primary" type="button">Enviar ocorrência</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="section section-muted" id="acompanhar">
+      <div class="section-heading">
+        <span class="section-number">02</span>
+        <div>
+          <h2>Acompanhar protocolo</h2>
+          <p>Consulte a situação atual do relato informado.</p>
+        </div>
+      </div>
+
+      <div class="tracking-panel">
+        <div class="field">
+          <label for="protocolo">Número do protocolo</label>
+          <input id="protocolo" name="protocolo" type="text" maxlength="20" placeholder="Ex.: RU-2026-0001">
+        </div>
+        <button class="button button-dark" type="button">Consultar</button>
+        <p>Estados previstos: Recebida, Em análise, Encaminhada, Em atendimento e Resolvida.</p>
+      </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+      <div class="section-heading">
+        <span class="section-number">03</span>
+        <div>
+          <h2>Como funciona</h2>
+          <p>Do registro do cidadão até a atualização do atendimento.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <article>
+          <span>01</span>
+          <h3>Registro</h3>
+          <p>O cidadão informa descrição, fotografia e coordenadas da ocorrência.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Triagem</h3>
+          <p>A IA pode sugerir categoria, prioridade e possíveis duplicidades para revisão humana.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Encaminhamento</h3>
+          <p>A prefeitura confirma os dados e direciona a ocorrência à equipe responsável.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Acompanhamento</h3>
+          <p>O histórico preserva as mudanças de status até a resolução do atendimento.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Radar Urbano</strong>
+    <p>Projeto acadêmico de Desenvolvimento de Sistemas e Inteligência Artificial.</p>
+  </footer>
+</body>
+</html>

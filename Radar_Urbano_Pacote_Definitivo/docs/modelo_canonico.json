@@ -1,0 +1,160 @@
+{
+  "project": {
+    "name": "Radar Urbano",
+    "city": "Maringá - PR",
+    "course": "Projeto Integrador - 1º ano DS + IA",
+    "year": 2026,
+    "scope": "Plataforma acadêmica de inteligência urbana para registro, análise, encaminhamento e acompanhamento de ocorrências em espaços públicos",
+    "principle": "A inteligência artificial apoia a triagem; a validação e a decisão administrativa permanecem humanas"
+  },
+  "domains": {
+    "perfil": ["CIDADAO", "PREFEITURA", "EQUIPE", "ADMINISTRADOR"],
+    "prioridade": ["BAIXA", "MEDIA", "ALTA", "CRITICA"],
+    "status_codigo": ["RECEBIDA", "EM_ANALISE", "ENCAMINHADA", "EM_ATENDIMENTO", "RESOLVIDA"],
+    "categoria_codigo": ["INFRAESTRUTURA", "ILUMINACAO", "TRANSITO", "ARBORIZACAO", "DRENAGEM", "CONSERVACAO", "LIMPEZA_URBANA", "SANEAMENTO"]
+  },
+  "tables": [
+    {
+      "name": "usuario",
+      "purpose": "Armazena os usuários que registram ocorrências ou atuam na validação e no atendimento.",
+      "fields": [
+        {"name":"id_usuario","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno gerado pelo banco.","example":"1"},
+        {"name":"nome","type":"VARCHAR(120)","nullable":false,"key":"","references":"","rule":"Nome usado para identificação no sistema.","example":"Usuário Teste 01"},
+        {"name":"email","type":"VARCHAR(160)","nullable":false,"key":"UQ","references":"","rule":"E-mail único; dados reais não devem ser usados na massa acadêmica.","example":"usuario01@example.invalid"},
+        {"name":"perfil","type":"VARCHAR(20)","nullable":false,"key":"CK","references":"","rule":"Código do domínio perfil.","example":"CIDADAO"},
+        {"name":"ativo","type":"BOOLEAN","nullable":false,"key":"","references":"","rule":"Indica se o acesso está habilitado.","example":"TRUE"},
+        {"name":"criado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora da criação do registro.","example":"2026-09-01T10:00:00-03:00"}
+      ]
+    },
+    {
+      "name": "categoria",
+      "purpose": "Controla as categorias utilizadas na classificação das ocorrências.",
+      "fields": [
+        {"name":"id_categoria","type":"SMALLINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno da categoria.","example":"1"},
+        {"name":"codigo","type":"VARCHAR(40)","nullable":false,"key":"UQ","references":"","rule":"Código técnico em letras maiúsculas e sem acentos.","example":"INFRAESTRUTURA"},
+        {"name":"nome","type":"VARCHAR(80)","nullable":false,"key":"UQ","references":"","rule":"Nome legível apresentado na interface.","example":"Infraestrutura"},
+        {"name":"descricao","type":"VARCHAR(255)","nullable":true,"key":"","references":"","rule":"Descrição curta da finalidade da categoria.","example":"Problemas em vias e estruturas públicas"},
+        {"name":"ativo","type":"BOOLEAN","nullable":false,"key":"","references":"","rule":"Permite desativar a categoria sem excluir o histórico.","example":"TRUE"}
+      ]
+    },
+    {
+      "name": "status_ocorrencia",
+      "purpose": "Controla as etapas possíveis do ciclo de atendimento de uma ocorrência.",
+      "fields": [
+        {"name":"id_status","type":"SMALLINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno do status.","example":"1"},
+        {"name":"codigo","type":"VARCHAR(30)","nullable":false,"key":"UQ","references":"","rule":"Código técnico em letras maiúsculas e sem acentos.","example":"EM_ANALISE"},
+        {"name":"nome","type":"VARCHAR(50)","nullable":false,"key":"UQ","references":"","rule":"Nome legível apresentado na interface.","example":"Em análise"},
+        {"name":"ordem","type":"SMALLINT","nullable":false,"key":"UQ, CK","references":"","rule":"Ordem positiva do fluxo padrão.","example":"2"},
+        {"name":"status_final","type":"BOOLEAN","nullable":false,"key":"","references":"","rule":"Indica se o status encerra o fluxo.","example":"FALSE"}
+      ]
+    },
+    {
+      "name": "equipe",
+      "purpose": "Armazena as equipes que podem receber e executar atendimentos.",
+      "fields": [
+        {"name":"id_equipe","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno da equipe.","example":"1"},
+        {"name":"nome","type":"VARCHAR(100)","nullable":false,"key":"UQ","references":"","rule":"Nome da equipe no sistema.","example":"Equipe de Infraestrutura"},
+        {"name":"especialidade","type":"VARCHAR(100)","nullable":false,"key":"","references":"","rule":"Área principal de atuação.","example":"Manutenção de vias"},
+        {"name":"ativa","type":"BOOLEAN","nullable":false,"key":"","references":"","rule":"Indica se a equipe pode receber novos atendimentos.","example":"TRUE"},
+        {"name":"criado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora da criação do registro.","example":"2026-09-01T10:00:00-03:00"}
+      ]
+    },
+    {
+      "name": "ocorrencia",
+      "purpose": "Armazena o relato principal enviado pelo cidadão e seu estado operacional atual.",
+      "fields": [
+        {"name":"id_ocorrencia","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno da ocorrência.","example":"3"},
+        {"name":"protocolo","type":"VARCHAR(20)","nullable":false,"key":"UQ","references":"","rule":"Código público de acompanhamento.","example":"RU-2026-000003"},
+        {"name":"id_usuario","type":"BIGINT","nullable":false,"key":"FK","references":"usuario.id_usuario","rule":"Usuário que registrou a ocorrência.","example":"1"},
+        {"name":"id_categoria","type":"SMALLINT","nullable":true,"key":"FK","references":"categoria.id_categoria","rule":"Categoria atual confirmada pela prefeitura; pode ficar vazia antes da triagem.","example":"3"},
+        {"name":"id_status","type":"SMALLINT","nullable":false,"key":"FK","references":"status_ocorrencia.id_status","rule":"Status operacional atual.","example":"4"},
+        {"name":"descricao","type":"TEXT","nullable":false,"key":"CK","references":"","rule":"Relato entre 10 e 2000 caracteres.","example":"Semáforo sem funcionar em cruzamento movimentado"},
+        {"name":"latitude","type":"NUMERIC(9,6)","nullable":false,"key":"CK","references":"","rule":"Valor entre -90 e 90.","example":"-23.419800"},
+        {"name":"longitude","type":"NUMERIC(9,6)","nullable":false,"key":"CK","references":"","rule":"Valor entre -180 e 180.","example":"-51.932500"},
+        {"name":"prioridade","type":"VARCHAR(10)","nullable":false,"key":"CK","references":"","rule":"Código do domínio prioridade.","example":"CRITICA"},
+        {"name":"criado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora do registro.","example":"2026-09-01T08:20:00-03:00"},
+        {"name":"atualizado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora da última alteração persistida.","example":"2026-09-01T09:10:00-03:00"}
+      ]
+    },
+    {
+      "name": "foto_ocorrencia",
+      "purpose": "Armazena as referências das fotografias vinculadas a cada ocorrência.",
+      "fields": [
+        {"name":"id_foto","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno da fotografia.","example":"1"},
+        {"name":"id_ocorrencia","type":"BIGINT","nullable":false,"key":"FK","references":"ocorrencia.id_ocorrencia","rule":"Ocorrência à qual a fotografia pertence.","example":"3"},
+        {"name":"url_arquivo","type":"TEXT","nullable":false,"key":"","references":"","rule":"Referência do arquivo armazenado pelo sistema.","example":"arquivos_teste/ocorrencia_003.jpg"},
+        {"name":"criado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora do vínculo da fotografia.","example":"2026-09-01T08:20:00-03:00"}
+      ]
+    },
+    {
+      "name": "analise_ia",
+      "purpose": "Registra cada análise de IA sem sobrescrever resultados anteriores.",
+      "fields": [
+        {"name":"id_analise","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno da análise.","example":"1"},
+        {"name":"id_ocorrencia","type":"BIGINT","nullable":false,"key":"FK","references":"ocorrencia.id_ocorrencia","rule":"Ocorrência analisada.","example":"3"},
+        {"name":"resumo","type":"TEXT","nullable":false,"key":"","references":"","rule":"Resumo estruturado produzido para apoiar a triagem.","example":"Falha de semáforo em cruzamento com risco imediato"},
+        {"name":"valido","type":"BOOLEAN","nullable":false,"key":"","references":"","rule":"Indicação técnica de que o relato possui informação suficiente para análise.","example":"TRUE"},
+        {"name":"id_categoria_sugerida","type":"SMALLINT","nullable":true,"key":"FK","references":"categoria.id_categoria","rule":"Categoria sugerida pela IA.","example":"3"},
+        {"name":"prioridade_sugerida","type":"VARCHAR(10)","nullable":true,"key":"CK","references":"","rule":"Prioridade sugerida usando o mesmo domínio da ocorrência.","example":"CRITICA"},
+        {"name":"id_ocorrencia_duplicada","type":"BIGINT","nullable":true,"key":"FK","references":"ocorrencia.id_ocorrencia","rule":"Referência a uma possível ocorrência duplicada.","example":"5"},
+        {"name":"analisado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora da análise.","example":"2026-09-01T08:21:00-03:00"}
+      ]
+    },
+    {
+      "name": "atendimento",
+      "purpose": "Registra os trabalhos atribuídos às equipes para tratar uma ocorrência.",
+      "fields": [
+        {"name":"id_atendimento","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno do atendimento.","example":"1"},
+        {"name":"id_ocorrencia","type":"BIGINT","nullable":false,"key":"FK","references":"ocorrencia.id_ocorrencia","rule":"Ocorrência atendida.","example":"3"},
+        {"name":"id_equipe","type":"BIGINT","nullable":false,"key":"FK","references":"equipe.id_equipe","rule":"Equipe responsável pelo atendimento.","example":"1"},
+        {"name":"inicio_em","type":"TIMESTAMPTZ","nullable":true,"key":"","references":"","rule":"Data e hora do início do trabalho.","example":"2026-09-01T09:00:00-03:00"},
+        {"name":"fim_em","type":"TIMESTAMPTZ","nullable":true,"key":"CK","references":"","rule":"Quando preenchida, não pode ser anterior ao início.","example":"2026-09-01T11:30:00-03:00"},
+        {"name":"observacao","type":"TEXT","nullable":true,"key":"","references":"","rule":"Registro operacional do atendimento.","example":"Sinalização provisória instalada"}
+      ]
+    },
+    {
+      "name": "historico_status",
+      "purpose": "Preserva cada mudança de status para rastreabilidade e auditoria.",
+      "fields": [
+        {"name":"id_historico","type":"BIGINT GENERATED ALWAYS AS IDENTITY","nullable":false,"key":"PK","references":"","rule":"Identificador interno do evento.","example":"1"},
+        {"name":"id_ocorrencia","type":"BIGINT","nullable":false,"key":"FK","references":"ocorrencia.id_ocorrencia","rule":"Ocorrência alterada.","example":"3"},
+        {"name":"id_status","type":"SMALLINT","nullable":false,"key":"FK","references":"status_ocorrencia.id_status","rule":"Novo status registrado.","example":"4"},
+        {"name":"id_usuario_responsavel","type":"BIGINT","nullable":false,"key":"FK","references":"usuario.id_usuario","rule":"Usuário responsável pela alteração.","example":"2"},
+        {"name":"observacao","type":"TEXT","nullable":true,"key":"","references":"","rule":"Justificativa ou informação complementar.","example":"Ocorrência encaminhada para atendimento"},
+        {"name":"alterado_em","type":"TIMESTAMPTZ","nullable":false,"key":"","references":"","rule":"Data e hora da alteração.","example":"2026-09-01T08:45:00-03:00"}
+      ]
+    }
+  ],
+  "relationships": [
+    {"from":"usuario.id_usuario","to":"ocorrencia.id_usuario","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Um usuário pode registrar várias ocorrências."},
+    {"from":"categoria.id_categoria","to":"ocorrencia.id_categoria","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Uma categoria pode classificar várias ocorrências."},
+    {"from":"status_ocorrencia.id_status","to":"ocorrencia.id_status","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Um status pode ser o estado atual de várias ocorrências."},
+    {"from":"ocorrencia.id_ocorrencia","to":"foto_ocorrencia.id_ocorrencia","cardinality":"1:N","on_delete":"CASCADE","meaning":"Uma ocorrência pode possuir várias fotografias."},
+    {"from":"ocorrencia.id_ocorrencia","to":"analise_ia.id_ocorrencia","cardinality":"1:N","on_delete":"CASCADE","meaning":"Uma ocorrência pode ser analisada mais de uma vez."},
+    {"from":"categoria.id_categoria","to":"analise_ia.id_categoria_sugerida","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Uma categoria pode ser sugerida em várias análises."},
+    {"from":"ocorrencia.id_ocorrencia","to":"analise_ia.id_ocorrencia_duplicada","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Uma ocorrência existente pode ser indicada como semelhante por várias análises."},
+    {"from":"ocorrencia.id_ocorrencia","to":"atendimento.id_ocorrencia","cardinality":"1:N","on_delete":"CASCADE","meaning":"Uma ocorrência pode receber vários atendimentos."},
+    {"from":"equipe.id_equipe","to":"atendimento.id_equipe","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Uma equipe pode executar vários atendimentos."},
+    {"from":"ocorrencia.id_ocorrencia","to":"historico_status.id_ocorrencia","cardinality":"1:N","on_delete":"CASCADE","meaning":"Uma ocorrência possui vários eventos de status."},
+    {"from":"status_ocorrencia.id_status","to":"historico_status.id_status","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Um status pode aparecer em vários eventos históricos."},
+    {"from":"usuario.id_usuario","to":"historico_status.id_usuario_responsavel","cardinality":"1:N","on_delete":"RESTRICT","meaning":"Um usuário pode registrar várias alterações de status."}
+  ],
+  "csv_columns": [
+    {"name":"id_ocorrencia","source":"ocorrencia.id_ocorrencia","type":"inteiro","required":true,"purpose":"Identificação verificável do registro."},
+    {"name":"protocolo","source":"ocorrencia.protocolo","type":"texto","required":true,"purpose":"Código público de acompanhamento."},
+    {"name":"descricao","source":"ocorrencia.descricao","type":"texto","required":true,"purpose":"Entrada textual para análise."},
+    {"name":"latitude","source":"ocorrencia.latitude","type":"decimal","required":true,"purpose":"Localização da ocorrência."},
+    {"name":"longitude","source":"ocorrencia.longitude","type":"decimal","required":true,"purpose":"Localização da ocorrência."},
+    {"name":"prioridade","source":"ocorrencia.prioridade","type":"texto categórico","required":true,"purpose":"Prioridade atual confirmada."},
+    {"name":"criado_em","source":"ocorrencia.criado_em","type":"data e hora ISO 8601","required":true,"purpose":"Ordem temporal e auditoria."},
+    {"name":"categoria_codigo","source":"categoria.codigo","type":"texto categórico","required":true,"purpose":"Categoria atual em formato legível por máquina."},
+    {"name":"status_codigo","source":"status_ocorrencia.codigo","type":"texto categórico","required":true,"purpose":"Status atual em formato legível por máquina."},
+    {"name":"foto_url","source":"foto_ocorrencia.url_arquivo","type":"texto","required":false,"purpose":"Referência da primeira foto; o teste textual não abre o arquivo."},
+    {"name":"resumo","source":"analise_ia.resumo","type":"texto","required":true,"purpose":"Resultado textual da análise simulada."},
+    {"name":"valido","source":"analise_ia.valido","type":"booleano","required":true,"purpose":"Resultado de validação da entrada."},
+    {"name":"id_categoria_sugerida","source":"analise_ia.id_categoria_sugerida","type":"inteiro","required":true,"purpose":"Categoria sugerida pela IA."},
+    {"name":"prioridade_sugerida","source":"analise_ia.prioridade_sugerida","type":"texto categórico","required":true,"purpose":"Prioridade sugerida pela IA."},
+    {"name":"id_ocorrencia_duplicada","source":"analise_ia.id_ocorrencia_duplicada","type":"inteiro","required":false,"purpose":"Possível duplicidade indicada pela IA."},
+    {"name":"analisado_em","source":"analise_ia.analisado_em","type":"data e hora ISO 8601","required":true,"purpose":"Data da análise registrada."}
+  ]
+}
