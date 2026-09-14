@@ -1,0 +1,9 @@
+VALIDAÇÃO APROVADA
+Tabelas verificadas: 9
+Campos verificados: 56
+Dicionário, DER e relatório: nomes rastreados
+View de exportação: cabeçalho idêntico ao CSV
+Colunas CSV: 16
+Registros CSV: 20
+IDs ALTA/CRITICA: 3, 7, 11, 14 e 18
+Duplicidade de teste: ID 20 referencia ID 5
