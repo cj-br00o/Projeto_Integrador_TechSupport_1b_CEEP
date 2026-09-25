@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interface administrativa do Radar Urbano para categorias, status e equipes.">
+  <title>Radar Urbano | Gestão</title>
+  <link rel="stylesheet" href="gestao.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header>
+    <div class="brand"><span>RU</span><div><strong>Radar Urbano</strong><small>Gestão municipal</small></div></div>
+    <div class="connection"><i></i> API: <strong id="api-status">verificando</strong></div>
+  </header>
+
+  <main id="conteudo">
+    <section class="intro">
+      <div><p class="eyebrow">Módulo 6 · Gestão</p><h1>Cadastros essenciais</h1><p>Consulte e cadastre categorias, etapas do atendimento e equipes responsáveis.</p></div>
+      <a href="http://127.0.0.1:8000/docs" target="_blank" rel="noreferrer">Abrir documentação da API</a>
+    </section>
+
+    <nav class="tabs" aria-label="Cadastros">
+      <button class="tab active" data-panel="categorias">Categorias</button>
+      <button class="tab" data-panel="status">Status</button>
+      <button class="tab" data-panel="equipes">Equipes</button>
+    </nav>
+
+    <section class="panel active" id="categorias">
+      <div class="panel-heading"><div><h2>Categorias</h2><p>Tipos usados para organizar as ocorrências urbanas.</p></div><button class="refresh" data-list="categorias">Atualizar lista</button></div>
+      <div class="grid">
+        <form data-endpoint="categorias">
+          <h3>Nova categoria</h3>
+          <label>Código<input name="codigo" required maxlength="40" pattern="[A-Z][A-Z0-9_]*" placeholder="ACESSIBILIDADE"></label>
+          <label>Nome<input name="nome" required maxlength="80" placeholder="Acessibilidade"></label>
+          <label>Descrição<textarea name="descricao" maxlength="255" placeholder="Barreiras em espaços públicos"></textarea></label>
+          <label class="check"><input name="ativo" type="checkbox" checked> Categoria ativa</label>
+          <button type="submit">Cadastrar categoria</button><p class="feedback" role="status"></p>
+        </form>
+        <div class="list"><h3>Categorias cadastradas</h3><div class="records" data-records="categorias"><p class="empty">Carregando dados...</p></div></div>
+      </div>
+    </section>
+
+    <section class="panel" id="status">
+      <div class="panel-heading"><div><h2>Status da ocorrência</h2><p>Etapas ordenadas do fluxo de atendimento.</p></div><button class="refresh" data-list="status-ocorrencia">Atualizar lista</button></div>
+      <div class="grid">
+        <form data-endpoint="status-ocorrencia">
+          <h3>Novo status</h3>
+          <label>Código<input name="codigo" required maxlength="30" pattern="[A-Z][A-Z0-9_]*" placeholder="AGUARDANDO"></label>
+          <label>Nome<input name="nome" required maxlength="50" placeholder="Aguardando"></label>
+          <label>Ordem<input name="ordem" required type="number" min="1" max="32767" placeholder="6"></label>
+          <label class="check"><input name="status_final" type="checkbox"> Encerra o atendimento</label>
+          <button type="submit">Cadastrar status</button><p class="feedback" role="status"></p>
+        </form>
+        <div class="list"><h3>Status cadastrados</h3><div class="records" data-records="status-ocorrencia"><p class="empty">Carregando dados...</p></div></div>
+      </div>
+    </section>
+
+    <section class="panel" id="equipes">
+      <div class="panel-heading"><div><h2>Equipes</h2><p>Grupos disponíveis para receber atendimentos.</p></div><button class="refresh" data-list="equipes">Atualizar lista</button></div>
+      <div class="grid">
+        <form data-endpoint="equipes">
+          <h3>Nova equipe</h3>
+          <label>Nome<input name="nome" required maxlength="100" placeholder="Equipe de Acessibilidade"></label>
+          <label>Especialidade<input name="especialidade" required maxlength="100" placeholder="Acessibilidade urbana"></label>
+          <label class="check"><input name="ativa" type="checkbox" checked> Equipe ativa</label>
+          <button type="submit">Cadastrar equipe</button><p class="feedback" role="status"></p>
+        </form>
+        <div class="list"><h3>Equipes cadastradas</h3><div class="records" data-records="equipes"><p class="empty">Carregando dados...</p></div></div>
+      </div>
+    </section>
+  </main>
+  <script src="gestao.js"></script>
+</body>
+</html>
+
