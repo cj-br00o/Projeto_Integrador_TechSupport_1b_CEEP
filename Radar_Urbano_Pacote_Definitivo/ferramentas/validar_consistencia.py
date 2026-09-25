@@ -1,22 +1,41 @@
 from pathlib import Path
-import csv, json, re, sys, zipfile
-from docx import Document
+import csv, hashlib, json, re, sys, zipfile
 
 root = Path(__file__).resolve().parents[1]
 model = json.loads((root / 'docs/modelo_canonico.json').read_text(encoding='utf-8'))
-schema = (root / 'database/01_schema.sql').read_text(encoding='utf-8')
-dictionary = (root / 'docs/03_dicionario_dados.md').read_text(encoding='utf-8')
+schema = (root / 'database/script_ddl.sql').read_text(encoding='utf-8')
+dictionary = (root / 'docs/dicionario_dados.md').read_text(encoding='utf-8')
 der = (root / 'docs/der/der_radar_urbano.mmd').read_text(encoding='utf-8')
 matrix = (root / 'docs/07_matriz_banco_csv.md').read_text(encoding='utf-8')
-report_path = root / 'Relatorio_Final_Radar_Urbano_Definitivo.docx'
-csv_path = root / 'database/radar_urbano_ocorrencias_teste.csv'
+csv_path = root / 'data/original/radar_urbano_ocorrencias_teste.csv'
+csv_database_path = root / 'database/dados.csv'
 errors = []
 
 required_paths = [
-    root / 'backend/README.md',
-    root / 'frontend/index.html',
-    root / 'frontend/styles.css',
-    root / 'database/radar_urbano_ocorrencias_teste.csv',
+    root / 'backend/main.py',
+    root / 'backend/database.py',
+    root / 'backend/models.py',
+    root / 'backend/schemas.py',
+    root / 'backend/analise.py',
+    root / 'backend/executar_analise.py',
+    root / 'frontend/gestao.html',
+    root / 'frontend/gestao.css',
+    root / 'frontend/gestao.js',
+    root / 'database/dados.csv',
+    root / 'database/script_ddl.sql',
+    root / 'database/script_seed.sql',
+    root / 'database/script_dql.sql',
+    root / 'data/original/radar_urbano_ocorrencias_teste.csv',
+    root / 'postman/Radar_Urbano_Modulo_6.postman_collection.json',
+    root / 'tests/test_api.py',
+    root / 'documentacao/backend_rotas.md',
+    root / 'documentacao/analise_dados.md',
+    root / 'evidencias/postman/resultado_pytest.txt',
+    root / 'evidencias/ia/resultados_analise.json',
+    root / 'evidencias/ia/ocorrencias_por_categoria.png',
+    root / 'docs/problema.md',
+    root / 'docs/regras_negocio.md',
+    root / 'docs/dicionario_dados.md',
     root / 'docs/dicionario.xlsx',
     root / 'docs/DER.png',
 ]
@@ -32,16 +51,11 @@ der_png_path = root / 'docs/DER.png'
 if der_png_path.exists() and der_png_path.read_bytes()[:8] != b'\x89PNG\r\n\x1a\n':
     errors.append('docs/DER.png não é um arquivo PNG válido')
 
-report_text = ''
-if report_path.exists():
-    report = Document(report_path)
-    report_parts = [p.text for p in report.paragraphs]
-    for report_table in report.tables:
-        for row in report_table.rows:
-            report_parts.extend(cell.text for cell in row.cells)
-    report_text = '\n'.join(report_parts)
-else:
-    errors.append('Relatório Word definitivo ausente')
+if csv_path.exists() and csv_database_path.exists():
+    hash_data = hashlib.sha256(csv_path.read_bytes()).hexdigest()
+    hash_database = hashlib.sha256(csv_database_path.read_bytes()).hexdigest()
+    if hash_data != hash_database:
+        errors.append('As cópias do CSV em data/original e database são diferentes')
 
 def table_block(name):
     m = re.search(rf'CREATE TABLE\s+{re.escape(name)}\s*\((.*?)\n\);', schema, re.I | re.S)
@@ -55,11 +69,11 @@ for table in model['tables']:
     for field in table['fields']:
         if not re.search(rf'^\s*{re.escape(field["name"])}\s+', block, re.M):
             errors.append(f"Campo ausente no DDL: {table['name']}.{field['name']}")
-        for label, content in [('dicionário', dictionary), ('DER', der), ('relatório', report_text)]:
+        for label, content in [('dicionário', dictionary), ('DER', der)]:
             if field['name'] not in content:
                 errors.append(f"Campo ausente no {label}: {table['name']}.{field['name']}")
-    if table['name'] not in dictionary or table['name'].upper() not in der or table['name'] not in report_text:
-        errors.append(f"Tabela não rastreada em todos os documentos: {table['name']}")
+    if table['name'] not in dictionary or table['name'].upper() not in der:
+        errors.append(f"Tabela não rastreada no dicionário e no DER: {table['name']}")
 
 rows = list(csv.DictReader(csv_path.open(encoding='utf-8')))
 expected_columns = [c['name'] for c in model['csv_columns']]
@@ -99,8 +113,38 @@ for r in rows:
 
 high = [int(r['id_ocorrencia']) for r in rows if r['prioridade'] in ('ALTA','CRITICA')]
 if high != [3,7,11,14,18]: errors.append(f'Gabarito alta/crítica divergente: {high}')
-csv_files = list(root.rglob('*.csv'))
-if len(csv_files) != 1: errors.append(f'O pacote deve ter um único CSV; encontrados {len(csv_files)}')
+
+seed = (root / 'database/script_seed.sql').read_text(encoding='utf-8')
+dql = (root / 'database/script_dql.sql').read_text(encoding='utf-8')
+for protocol in protocols:
+    if protocol not in seed:
+        errors.append(f'Protocolo do CSV ausente no seed: {protocol}')
+if "COUNT(*) FILTER (WHERE prioridade IN ('ALTA', 'CRITICA'))" not in dql:
+    errors.append('Consulta final de urgências ausente no script_dql.sql')
+
+resultado_path = root / 'outputs/resultados/resumo_resultados.json'
+if resultado_path.exists():
+    resultado = json.loads(resultado_path.read_text(encoding='utf-8'))
+    if resultado['estatisticas']['ids_urgentes'] != [3, 7, 11, 14, 18]:
+        errors.append('Resultado Python diverge do gabarito de urgências')
+    if resultado['estatisticas']['possiveis_duplicidades'] != 1:
+        errors.append('Resultado Python diverge da duplicidade esperada')
+
+resultado_modulo6 = root / 'evidencias/ia/resultados_analise.json'
+if resultado_modulo6.exists():
+    resultado = json.loads(resultado_modulo6.read_text(encoding='utf-8'))
+    resumo = resultado['resumo']
+    if resumo['registros'] != 20: errors.append('Resumo do Módulo 6 não possui 20 registros')
+    if resumo['ocorrencias_urgentes'] != 5: errors.append('Resumo do Módulo 6 diverge em urgências')
+    if resumo['possiveis_duplicidades'] != 1: errors.append('Resumo do Módulo 6 diverge em duplicidades')
+
+backend_text = '\n'.join(
+    (root / caminho).read_text(encoding='utf-8')
+    for caminho in ['backend/models.py', 'backend/schemas.py', 'backend/main.py']
+)
+for nome in ['categoria', 'status_ocorrencia', 'equipe']:
+    if nome not in backend_text:
+        errors.append(f'Tabela elegível ausente no backend: {nome}')
 
 if errors:
     print('VALIDAÇÃO COM ERROS')
@@ -109,9 +153,13 @@ if errors:
 print('VALIDAÇÃO APROVADA')
 print(f'Tabelas verificadas: {len(model["tables"])}')
 print(f'Campos verificados: {sum(len(t["fields"]) for t in model["tables"])}')
-print('Dicionário, DER e relatório: nomes rastreados')
-print('Estrutura exigida: frontend, database e docs conferidos')
+print('Dicionário e DER: nomes rastreados')
+print('Estrutura exigida: backend, IA, frontend, database, documentação e evidências conferidos')
 print('View de exportação: cabeçalho idêntico ao CSV')
+print('CSV original e cópia em database: conteúdo idêntico')
+print('Seed: todos os protocolos do CSV localizados')
+print('Resultados Python: gabaritos conferidos')
+print('Rotas elegíveis: categoria, status_ocorrencia e equipe')
 print(f'Colunas CSV: {len(expected_columns)}')
 print(f'Registros CSV: {len(rows)}')
 print('IDs ALTA/CRITICA: 3, 7, 11, 14 e 18')
