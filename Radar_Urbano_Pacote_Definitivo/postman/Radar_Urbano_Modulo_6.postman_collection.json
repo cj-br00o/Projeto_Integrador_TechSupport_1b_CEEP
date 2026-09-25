@@ -1,0 +1,63 @@
+{
+  "info": {
+    "name": "Radar Urbano — Módulo 6",
+    "description": "Testes GET e POST das tabelas simples do Radar Urbano.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{"key": "base_url", "value": "http://127.0.0.1:8000"}],
+  "item": [
+    {
+      "name": "Sistema",
+      "item": [
+        {"name": "Saúde", "request": {"method": "GET", "url": "{{base_url}}/saude"}},
+        {"name": "Resumo IA", "request": {"method": "GET", "url": "{{base_url}}/analises/resumo"}}
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {"name": "Listar categorias", "request": {"method": "GET", "url": "{{base_url}}/categorias"}},
+        {
+          "name": "Cadastrar categoria",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\n  \"codigo\": \"ACESSIBILIDADE\",\n  \"nome\": \"Acessibilidade\",\n  \"descricao\": \"Barreiras em espaços públicos\",\n  \"ativo\": true\n}"},
+            "url": "{{base_url}}/categorias"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Status da ocorrência",
+      "item": [
+        {"name": "Listar status", "request": {"method": "GET", "url": "{{base_url}}/status-ocorrencia"}},
+        {
+          "name": "Cadastrar status",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\n  \"codigo\": \"AGUARDANDO\",\n  \"nome\": \"Aguardando\",\n  \"ordem\": 6,\n  \"status_final\": false\n}"},
+            "url": "{{base_url}}/status-ocorrencia"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Equipes",
+      "item": [
+        {"name": "Listar equipes", "request": {"method": "GET", "url": "{{base_url}}/equipes"}},
+        {
+          "name": "Cadastrar equipe",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\n  \"nome\": \"Equipe de Acessibilidade\",\n  \"especialidade\": \"Acessibilidade urbana\",\n  \"ativa\": true\n}"},
+            "url": "{{base_url}}/equipes"
+          }
+        }
+      ]
+    }
+  ]
+}
+
