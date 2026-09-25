@@ -1,7 +1,13 @@
 # Backend
 
-Esta pasta está reservada para a implementação da API do Radar Urbano.
+API FastAPI do Módulo 6. As rotas iniciais trabalham somente com tabelas de chave primária simples e sem chave estrangeira: `categoria`, `status_ocorrencia` e `equipe`.
 
-No estado atual do projeto, o modelo PostgreSQL, os dados de referência e os testes estão documentados em `../database`. O protótipo visual está em `../frontend`. Uma API executável ainda não faz parte do escopo concluído; por isso, nenhum código de backend fictício foi incluído.
+```bash
+uvicorn backend.main:app --reload
+```
 
-Quando implementado, o backend deverá respeitar integralmente os nomes físicos, domínios, chaves e regras definidos em `../database/01_schema.sql` e `../docs/modelo_canonico.json`.
+- Swagger: `http://127.0.0.1:8000/docs`
+- Testes: `pytest -q`
+- Análise de IA: `python -m backend.executar_analise`
+
+O banco deve existir previamente no Supabase. A API lê `DATABASE_URL` do arquivo local `.env`, que não pode ser publicado.
