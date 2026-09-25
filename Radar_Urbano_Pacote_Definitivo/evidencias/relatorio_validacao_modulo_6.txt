@@ -1,0 +1,14 @@
+VALIDAÇÃO APROVADA
+Tabelas verificadas: 9
+Campos verificados: 56
+Dicionário e DER: nomes rastreados
+Estrutura exigida: backend, IA, frontend, database, documentação e evidências conferidos
+View de exportação: cabeçalho idêntico ao CSV
+CSV original e cópia em database: conteúdo idêntico
+Seed: todos os protocolos do CSV localizados
+Resultados Python: gabaritos conferidos
+Rotas elegíveis: categoria, status_ocorrencia e equipe
+Colunas CSV: 16
+Registros CSV: 20
+IDs ALTA/CRITICA: 3, 7, 11, 14 e 18
+Duplicidade de teste: ID 20 referencia ID 5
