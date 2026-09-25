@@ -1,0 +1,36 @@
+{
+  "resumo": {
+    "registros": 20,
+    "tempo_analise_media_min": 1.0,
+    "tempo_analise_mediana_min": 1.0,
+    "ocorrencias_urgentes": 5,
+    "categoria_mais_frequente": "INFRAESTRUTURA",
+    "possiveis_duplicidades": 1
+  },
+  "estatisticas_tempo_analise_min": {
+    "media": 1.0,
+    "mediana": 1.0,
+    "moda": 1.0,
+    "minimo": 1.0,
+    "maximo": 1.0,
+    "amplitude": 0.0,
+    "variancia": 0.0,
+    "desvio_padrao": 0.0
+  },
+  "ocorrencias_por_categoria": {
+    "INFRAESTRUTURA": 4,
+    "DRENAGEM": 3,
+    "LIMPEZA_URBANA": 3,
+    "TRANSITO": 3,
+    "ILUMINACAO": 2,
+    "CONSERVACAO": 2,
+    "ARBORIZACAO": 2,
+    "SANEAMENTO": 1
+  },
+  "ocorrencias_por_prioridade": {
+    "MEDIA": 10,
+    "BAIXA": 5,
+    "CRITICA": 3,
+    "ALTA": 2
+  }
+}
