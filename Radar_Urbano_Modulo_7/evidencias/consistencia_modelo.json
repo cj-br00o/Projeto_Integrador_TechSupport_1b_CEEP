@@ -1,0 +1,31 @@
+{
+  "tabelas_mapeadas": 6,
+  "tabelas_no_ddl": 9,
+  "resultado": [
+    {
+      "tabela": "categoria",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    },
+    {
+      "tabela": "status_ocorrencia",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    },
+    {
+      "tabela": "equipe",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    },
+    {
+      "tabela": "usuario",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    },
+    {
+      "tabela": "ocorrencia",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    },
+    {
+      "tabela": "historico_status",
+      "nomes_pk_fk_nulabilidade": "conferidos"
+    }
+  ],
+  "escopo": "comparação estática de nomes, PK, FK e nulabilidade; não executa PostgreSQL"
+}
