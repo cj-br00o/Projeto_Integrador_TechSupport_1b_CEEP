@@ -1,6 +1,6 @@
 {
   ".gitignore": "ca3877db99fd0e44a89565199ebfb473a563106ebb2a12d36814f438c5ac71a2",
-  "README.md": "d38cbe716181bc3ffe44cea22f1f8a7d51f2ff4df7a46ae863fcdcd6641fb48d",
+  "README.md": "aa31d90d934b245eda1ac2d299498899377ff8e3214af67ac2677e90689889a0",
   ".env.example": "5d7c3ec7d9f53b0a6a6961c906ede636212bd99914b321c36c386e2462cf9797",
   "requirements.txt": "abeb724b321f4715c7765a2428cd26eb56a479a9c6f472f588da1d14e1a9d461",
   "Relatorio_DS_Modulo_7_Radar_Urbano.docx": "9c277a24475c5caacf3d617891085a716992eb03a2c04969d5dedd9e87eff6de",
@@ -18,7 +18,7 @@
   "docs/modelo_canonico.json": "6883390df5a40cb2be5670b13f1c72c2a6b7ec8054c96f833471ef6114698df7",
   "docs/contrato_dashboard.md": "1216419574957849b92c2fd55cf14a201c6a14cfb0d4fcb689250d2f44ff26c9",
   "docs/03_dicionario_dados.md": "62f139f5ef1d55235fadfb6ec2c3aeb95e9b380db46ea29f5dab35115601453f",
-  "docs/criterios_e_resultados.md": "e953ae5a1251745f35ab73e50addf8924be8062e7b06d63d9e14166236d732ac",
+  "docs/criterios_e_resultados.md": "bae0152317092b5fe3299aa1aa1cb0866bda6b5a937d6a13d3a4340fefe6b7ab",
   "backend/analise.py": "0ec5c6c91d657ec0751fe3d16251b74ee21301c1fa46ae944e1dd13a6a4498fa",
   "backend/main.py": "17637d39a282deea7016ce1c683b79129337dbb6bc775beea25bd812fdf8da5f",
   "backend/__init__.py": "02766706883d172cc3ce8e9dd28e4c9ebb792f9c0e15ef6190f23ee78972fb71",
