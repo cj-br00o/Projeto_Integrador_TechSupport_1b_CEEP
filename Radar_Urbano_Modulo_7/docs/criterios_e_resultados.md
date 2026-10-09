@@ -16,7 +16,7 @@
 | JSON para dashboard | Três respostas principais e OpenAPI | Produzido pela API |
 | Capturas de /docs ou Postman | evidencias/capturas | Pendente de execução na sessão do estudante |
 | Backend no Supabase | /saude/banco e registros persistidos | Não executado nesta sessão |
-| Código no GitHub | Arquivos prontos para versionar | Push não realizado nesta sessão |
+| Código no GitHub | Pasta Radar_Urbano_Modulo_7 no repositório da equipe | Publicado pela interface do GitHub em 09/10/2026 (UTC) |
 | Autonomia e participação | Roteiro de início, parada e ficha da equipe | Demonstração pessoal pendente |
 
 35 testes automatizados foram aprovados. O log e o XML detalham as execuções. A conferência do modelo verifica nomes, PK, FK e nulabilidade de seis tabelas mapeadas, sem executar o DDL PostgreSQL. As outras três tabelas permanecem no DDL; não receberam rotas nesta avaliação.
