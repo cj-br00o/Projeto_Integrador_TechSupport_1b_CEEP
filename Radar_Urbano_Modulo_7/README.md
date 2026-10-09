@@ -9,7 +9,7 @@ Entrega autoral da avaliação Integração do Backend. Uma aplicação FastAPI 
 - Leitura e validação do CSV anterior, três rotas analíticas principais e uma rota de qualidade.
 - JSONs produzidos pela API, conferência manual dos cálculos e comparação estática de seis modelos com o banco canônico de nove tabelas.
 
-Os testes locais não comprovam conexão ao Supabase. A sessão não tinha DATABASE_URL nem credenciais do projeto. Não há capturas de Supabase, Postman ou Swagger apresentadas como testes já realizados. O envio ao GitHub e a demonstração escolar também dependem do acesso do estudante.
+Os testes locais não comprovam conexão ao Supabase. A sessão não tinha DATABASE_URL nem credenciais do projeto. Não há capturas de Supabase, Postman ou Swagger apresentadas como testes já realizados. A publicação do Módulo 7 no GitHub foi realizada em 9 de outubro de 2026 (UTC), em Radar_Urbano_Modulo_7. A demonstração escolar permanece pendente. A conta acessível no Supabase apresentou outro projeto, com tabelas de merenda; esse banco não foi alterado.
 
 ## Arquivos principais
 
