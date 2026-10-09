@@ -1,0 +1,400 @@
+{
+  "info": {
+    "name": "Radar Urbano Módulo 7",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Execute em um ambiente acadêmico. Cadastro grava dados reais no banco conectado. Não foi executada no Postman nesta sessão."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "id_categoria",
+      "value": ""
+    },
+    {
+      "key": "id_usuario",
+      "value": ""
+    },
+    {
+      "key": "id_inexistente",
+      "value": "30000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Saúde da aplicação",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/saude"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conexão real do banco",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/saude/banco"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cadastrar categoria com PK",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/categorias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"DEMO_{{sufixo}}\",\n  \"nome\": \"Categoria de teste {{sufixo}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"sufixo\",Date.now().toString());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "if(pm.response.code===201) pm.collectionVariables.set(\"id_categoria\",pm.response.json().id_categoria);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultar categorias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/categorias"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cadastrar cidadão fictício",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Cidadão de teste\",\n  \"email\": \"teste{{sufixo}}@example.invalid\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "if(pm.response.code===201) pm.collectionVariables.set(\"id_usuario\",pm.response.json().id_usuario);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cadastrar ocorrência com FK",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/ocorrencias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id_usuario\": \"{{id_usuario}}\",\n  \"id_categoria\": \"{{id_categoria}}\",\n  \"descricao\": \"Buraco na rua de demonstração.\",\n  \"latitude\": -23.42,\n  \"longitude\": -51.93,\n  \"prioridade\": \"ALTA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultar nomes relacionados",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/ocorrencias"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Nomes da categoria e status\",()=>{ pm.response.json().forEach(x=>{pm.expect(x).to.have.property(\"categoria_nome\");pm.expect(x).to.have.property(\"status_nome\");});});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Erro de categoria inexistente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/ocorrencias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id_usuario\": \"{{id_usuario}}\",\n  \"id_categoria\": \"{{id_inexistente}}\",\n  \"descricao\": \"Buraco na rua de demonstração.\",\n  \"latitude\": -23.42,\n  \"longitude\": -51.93,\n  \"prioridade\": \"ALTA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Erro de coordenada inválida",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/ocorrencias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id_usuario\": \"{{id_usuario}}\",\n  \"id_categoria\": \"{{id_categoria}}\",\n  \"descricao\": \"Buraco na rua de demonstração.\",\n  \"latitude\": 91,\n  \"longitude\": -51.93,\n  \"prioridade\": \"ALTA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 422\", () => pm.response.to.have.status(422));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categoria repetida",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/categorias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"DEMO_{{sufixo}}\",\n  \"nome\": \"Categoria de teste {{sufixo}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", () => pm.response.to.have.status(409));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Análise resumo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/analises/resumo"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Análise categorias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/analises/categorias"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Análise datas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/analises/datas"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Análise qualidade",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/analises/qualidade"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
