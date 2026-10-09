@@ -1,0 +1,27 @@
+{
+  "resultado": "aprovado",
+  "linhas": 20,
+  "ausentes_por_coluna": {
+    "id_ocorrencia": 0,
+    "protocolo": 0,
+    "descricao": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "prioridade": 0,
+    "criado_em": 0,
+    "categoria_codigo": 0,
+    "status_codigo": 0,
+    "foto_url": 0,
+    "resumo": 0,
+    "valido": 0,
+    "id_categoria_sugerida": 0,
+    "prioridade_sugerida": 0,
+    "id_ocorrencia_duplicada": 19,
+    "analisado_em": 0
+  },
+  "linhas_identicas": 0,
+  "ids_repetidos": 0,
+  "unidade_da_linha": "uma ocorrência com primeira foto e última análise registradas",
+  "regras": "Não são removidas linhas silenciosamente; inconsistências interrompem a análise.",
+  "temporalidade": "criado_em define a série diária; analisado_em define o intervalo de análise."
+}

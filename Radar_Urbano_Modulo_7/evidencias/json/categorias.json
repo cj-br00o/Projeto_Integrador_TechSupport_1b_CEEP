@@ -1,0 +1,58 @@
+[
+  {
+    "categoria_codigo": "INFRAESTRUTURA",
+    "categoria_nome": "Infraestrutura",
+    "total_ocorrencias": 4,
+    "urgentes": 2,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "DRENAGEM",
+    "categoria_nome": "Drenagem",
+    "total_ocorrencias": 3,
+    "urgentes": 1,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "LIMPEZA_URBANA",
+    "categoria_nome": "Limpeza urbana",
+    "total_ocorrencias": 3,
+    "urgentes": 0,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "TRANSITO",
+    "categoria_nome": "Trânsito",
+    "total_ocorrencias": 3,
+    "urgentes": 1,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "ARBORIZACAO",
+    "categoria_nome": "Arborização",
+    "total_ocorrencias": 2,
+    "urgentes": 1,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "CONSERVACAO",
+    "categoria_nome": "Conservação",
+    "total_ocorrencias": 2,
+    "urgentes": 0,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "ILUMINACAO",
+    "categoria_nome": "Iluminação",
+    "total_ocorrencias": 2,
+    "urgentes": 0,
+    "tempo_analise_media_min": 1.0
+  },
+  {
+    "categoria_codigo": "SANEAMENTO",
+    "categoria_nome": "Saneamento",
+    "total_ocorrencias": 1,
+    "urgentes": 0,
+    "tempo_analise_media_min": 1.0
+  }
+]

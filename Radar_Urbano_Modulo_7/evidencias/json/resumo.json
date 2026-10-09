@@ -1,0 +1,18 @@
+{
+  "linhas_csv": 20,
+  "total_ocorrencias": 20,
+  "total_analisadas": 20,
+  "sem_analise": 0,
+  "tempo_analise_soma_min": 20.0,
+  "tempo_analise_media_min": 1.0,
+  "tempo_analise_mediana_min": 1.0,
+  "ocorrencias_urgentes": 5,
+  "percentual_urgentes": 25.0,
+  "possiveis_duplicidades": 1,
+  "relatos_validos": 20,
+  "relatos_invalidos": 0,
+  "data_inicial": "2026-09-01",
+  "data_final": "2026-09-01",
+  "fuso_agregacao": "America/Sao_Paulo",
+  "fonte": "massa sintética acadêmica"
+}

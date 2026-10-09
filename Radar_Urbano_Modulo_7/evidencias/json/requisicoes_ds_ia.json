@@ -1,0 +1,279 @@
+{
+  "executado_em_utc": "2026-10-09T02:22:18.244685+00:00",
+  "ambiente": "FastAPI TestClient com SQLite temporário; não é Supabase ou Postman",
+  "requisicoes": [
+    {
+      "metodo": "POST",
+      "rota": "/categorias",
+      "entrada": {
+        "codigo": "INFRAESTRUTURA",
+        "nome": "Infraestrutura"
+      },
+      "status": 201,
+      "resposta": {
+        "codigo": "INFRAESTRUTURA",
+        "nome": "Infraestrutura",
+        "descricao": null,
+        "ativo": true,
+        "id_categoria": 1
+      }
+    },
+    {
+      "metodo": "GET",
+      "rota": "/categorias",
+      "entrada": null,
+      "status": 200,
+      "resposta": [
+        {
+          "codigo": "INFRAESTRUTURA",
+          "nome": "Infraestrutura",
+          "descricao": null,
+          "ativo": true,
+          "id_categoria": 1
+        }
+      ]
+    },
+    {
+      "metodo": "POST",
+      "rota": "/ocorrencias",
+      "entrada": {
+        "id_usuario": 1,
+        "id_categoria": 1,
+        "descricao": "Buraco em via de demonstração.",
+        "latitude": -23.42,
+        "longitude": -51.93,
+        "prioridade": "ALTA"
+      },
+      "status": 201,
+      "resposta": {
+        "id_ocorrencia": 1,
+        "protocolo": "RU-B4E4A763D4B340398",
+        "id_usuario": 1,
+        "id_categoria": 1,
+        "id_status": 1,
+        "descricao": "Buraco em via de demonstração.",
+        "latitude": "-23.420000",
+        "longitude": "-51.930000",
+        "prioridade": "ALTA",
+        "criado_em": "2026-10-09T02:22:18",
+        "atualizado_em": "2026-10-09T02:22:18",
+        "categoria_nome": "Infraestrutura",
+        "status_nome": "Recebida"
+      }
+    },
+    {
+      "metodo": "GET",
+      "rota": "/ocorrencias",
+      "entrada": null,
+      "status": 200,
+      "resposta": [
+        {
+          "id_ocorrencia": 1,
+          "protocolo": "RU-B4E4A763D4B340398",
+          "id_usuario": 1,
+          "id_categoria": 1,
+          "id_status": 1,
+          "descricao": "Buraco em via de demonstração.",
+          "latitude": "-23.420000",
+          "longitude": "-51.930000",
+          "prioridade": "ALTA",
+          "criado_em": "2026-10-09T02:22:18",
+          "atualizado_em": "2026-10-09T02:22:18",
+          "categoria_nome": "Infraestrutura",
+          "status_nome": "Recebida"
+        }
+      ]
+    },
+    {
+      "metodo": "POST",
+      "rota": "/ocorrencias",
+      "entrada": {
+        "id_usuario": 1,
+        "id_categoria": 30000,
+        "descricao": "Buraco em via de demonstração.",
+        "latitude": -23.42,
+        "longitude": -51.93,
+        "prioridade": "ALTA"
+      },
+      "status": 404,
+      "resposta": {
+        "detail": "Categoria não encontrada."
+      }
+    },
+    {
+      "metodo": "POST",
+      "rota": "/ocorrencias",
+      "entrada": {
+        "id_usuario": 1,
+        "id_categoria": 1,
+        "descricao": "Buraco em via de demonstração.",
+        "latitude": 91,
+        "longitude": -51.93,
+        "prioridade": "ALTA"
+      },
+      "status": 422,
+      "resposta": {
+        "detail": [
+          {
+            "type": "less_than_equal",
+            "loc": [
+              "body",
+              "latitude"
+            ],
+            "msg": "Input should be less than or equal to 90",
+            "input": 91,
+            "ctx": {
+              "le": 90
+            }
+          }
+        ]
+      }
+    },
+    {
+      "metodo": "POST",
+      "rota": "/categorias",
+      "entrada": {
+        "codigo": "INFRAESTRUTURA",
+        "nome": "Infraestrutura"
+      },
+      "status": 409,
+      "resposta": {
+        "detail": "Já existe uma categoria com esse código ou nome."
+      }
+    },
+    {
+      "metodo": "GET",
+      "rota": "/analises/resumo",
+      "entrada": null,
+      "status": 200,
+      "resposta": {
+        "linhas_csv": 20,
+        "total_ocorrencias": 20,
+        "total_analisadas": 20,
+        "sem_analise": 0,
+        "tempo_analise_soma_min": 20.0,
+        "tempo_analise_media_min": 1.0,
+        "tempo_analise_mediana_min": 1.0,
+        "ocorrencias_urgentes": 5,
+        "percentual_urgentes": 25.0,
+        "possiveis_duplicidades": 1,
+        "relatos_validos": 20,
+        "relatos_invalidos": 0,
+        "data_inicial": "2026-09-01",
+        "data_final": "2026-09-01",
+        "fuso_agregacao": "America/Sao_Paulo",
+        "fonte": "massa sintética acadêmica"
+      }
+    },
+    {
+      "metodo": "GET",
+      "rota": "/analises/categorias",
+      "entrada": null,
+      "status": 200,
+      "resposta": [
+        {
+          "categoria_codigo": "INFRAESTRUTURA",
+          "categoria_nome": "Infraestrutura",
+          "total_ocorrencias": 4,
+          "urgentes": 2,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "DRENAGEM",
+          "categoria_nome": "Drenagem",
+          "total_ocorrencias": 3,
+          "urgentes": 1,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "LIMPEZA_URBANA",
+          "categoria_nome": "Limpeza urbana",
+          "total_ocorrencias": 3,
+          "urgentes": 0,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "TRANSITO",
+          "categoria_nome": "Trânsito",
+          "total_ocorrencias": 3,
+          "urgentes": 1,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "ARBORIZACAO",
+          "categoria_nome": "Arborização",
+          "total_ocorrencias": 2,
+          "urgentes": 1,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "CONSERVACAO",
+          "categoria_nome": "Conservação",
+          "total_ocorrencias": 2,
+          "urgentes": 0,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "ILUMINACAO",
+          "categoria_nome": "Iluminação",
+          "total_ocorrencias": 2,
+          "urgentes": 0,
+          "tempo_analise_media_min": 1.0
+        },
+        {
+          "categoria_codigo": "SANEAMENTO",
+          "categoria_nome": "Saneamento",
+          "total_ocorrencias": 1,
+          "urgentes": 0,
+          "tempo_analise_media_min": 1.0
+        }
+      ]
+    },
+    {
+      "metodo": "GET",
+      "rota": "/analises/datas",
+      "entrada": null,
+      "status": 200,
+      "resposta": [
+        {
+          "data": "2026-09-01",
+          "total_ocorrencias": 20,
+          "urgentes": 5
+        }
+      ]
+    },
+    {
+      "metodo": "GET",
+      "rota": "/analises/qualidade",
+      "entrada": null,
+      "status": 200,
+      "resposta": {
+        "resultado": "aprovado",
+        "linhas": 20,
+        "ausentes_por_coluna": {
+          "id_ocorrencia": 0,
+          "protocolo": 0,
+          "descricao": 0,
+          "latitude": 0,
+          "longitude": 0,
+          "prioridade": 0,
+          "criado_em": 0,
+          "categoria_codigo": 0,
+          "status_codigo": 0,
+          "foto_url": 0,
+          "resumo": 0,
+          "valido": 0,
+          "id_categoria_sugerida": 0,
+          "prioridade_sugerida": 0,
+          "id_ocorrencia_duplicada": 19,
+          "analisado_em": 0
+        },
+        "linhas_identicas": 0,
+        "ids_repetidos": 0,
+        "unidade_da_linha": "uma ocorrência com primeira foto e última análise registradas",
+        "regras": "Não são removidas linhas silenciosamente; inconsistências interrompem a análise.",
+        "temporalidade": "criado_em define a série diária; analisado_em define o intervalo de análise."
+      }
+    }
+  ]
+}

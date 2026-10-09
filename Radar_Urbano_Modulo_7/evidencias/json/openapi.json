@@ -1,0 +1,1015 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Radar Urbano API",
+    "description": "Gestão com PostgreSQL e análise independente do CSV acadêmico.",
+    "version": "7.0.0"
+  },
+  "paths": {
+    "/categorias": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Listar Categorias",
+        "operationId": "listar_categorias_categorias_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriaResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Categorias Categorias Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Criar Categoria",
+        "operationId": "criar_categoria_categorias_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status-ocorrencia": {
+      "get": {
+        "tags": [
+          "Status da ocorrência"
+        ],
+        "summary": "Listar Status",
+        "operationId": "listar_status_status_ocorrencia_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/StatusResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Status Status Ocorrencia Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Status da ocorrência"
+        ],
+        "summary": "Criar Status",
+        "operationId": "criar_status_status_ocorrencia_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/equipes": {
+      "get": {
+        "tags": [
+          "Equipes"
+        ],
+        "summary": "Listar Equipes",
+        "operationId": "listar_equipes_equipes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EquipeResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Equipes Equipes Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Equipes"
+        ],
+        "summary": "Criar Equipe",
+        "operationId": "criar_equipe_equipes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EquipeCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EquipeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "tags": [
+          "Gestão de ocorrências"
+        ],
+        "summary": "Criar Usuario",
+        "operationId": "criar_usuario_usuarios_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ocorrencias": {
+      "post": {
+        "tags": [
+          "Gestão de ocorrências"
+        ],
+        "summary": "Criar Ocorrencia",
+        "operationId": "criar_ocorrencia_ocorrencias_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcorrenciaCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OcorrenciaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Gestão de ocorrências"
+        ],
+        "summary": "Listar Ocorrencias",
+        "operationId": "listar_ocorrencias_ocorrencias_get",
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "deslocamento",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Deslocamento"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OcorrenciaResponse"
+                  },
+                  "title": "Response Listar Ocorrencias Ocorrencias Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ocorrencias/{id_ocorrencia}": {
+      "get": {
+        "tags": [
+          "Gestão de ocorrências"
+        ],
+        "summary": "Consultar Ocorrencia",
+        "operationId": "consultar_ocorrencia_ocorrencias__id_ocorrencia__get",
+        "parameters": [
+          {
+            "name": "id_ocorrencia",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id Ocorrencia"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OcorrenciaResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Sistema"
+        ],
+        "summary": "Inicio",
+        "operationId": "inicio__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/saude": {
+      "get": {
+        "tags": [
+          "Sistema"
+        ],
+        "summary": "Saude",
+        "operationId": "saude_saude_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/saude/banco": {
+      "get": {
+        "tags": [
+          "Sistema"
+        ],
+        "summary": "Saude Banco",
+        "operationId": "saude_banco_saude_banco_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/resumo": {
+      "get": {
+        "tags": [
+          "Análise de dados"
+        ],
+        "summary": "Consultar Resumo",
+        "operationId": "consultar_resumo_analises_resumo_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/categorias": {
+      "get": {
+        "tags": [
+          "Análise de dados"
+        ],
+        "summary": "Consultar Categorias",
+        "operationId": "consultar_categorias_analises_categorias_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/datas": {
+      "get": {
+        "tags": [
+          "Análise de dados"
+        ],
+        "summary": "Consultar Datas",
+        "operationId": "consultar_datas_analises_datas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/qualidade": {
+      "get": {
+        "tags": [
+          "Análise de dados"
+        ],
+        "summary": "Consultar Qualidade",
+        "operationId": "consultar_qualidade_analises_qualidade_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CategoriaCreate": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 2,
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "title": "Codigo"
+          },
+          "nome": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descricao"
+          },
+          "ativo": {
+            "type": "boolean",
+            "title": "Ativo",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "codigo",
+          "nome"
+        ],
+        "title": "CategoriaCreate"
+      },
+      "CategoriaResponse": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 2,
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "title": "Codigo"
+          },
+          "nome": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descricao"
+          },
+          "ativo": {
+            "type": "boolean",
+            "title": "Ativo",
+            "default": true
+          },
+          "id_categoria": {
+            "type": "integer",
+            "title": "Id Categoria"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "codigo",
+          "nome",
+          "id_categoria"
+        ],
+        "title": "CategoriaResponse"
+      },
+      "EquipeCreate": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "especialidade": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Especialidade"
+          },
+          "ativa": {
+            "type": "boolean",
+            "title": "Ativa",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nome",
+          "especialidade"
+        ],
+        "title": "EquipeCreate"
+      },
+      "EquipeResponse": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "especialidade": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Especialidade"
+          },
+          "ativa": {
+            "type": "boolean",
+            "title": "Ativa",
+            "default": true
+          },
+          "id_equipe": {
+            "type": "integer",
+            "title": "Id Equipe"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nome",
+          "especialidade",
+          "id_equipe",
+          "criado_em"
+        ],
+        "title": "EquipeResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "OcorrenciaCreate": {
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Id Usuario"
+          },
+          "id_categoria": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 32767.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id Categoria"
+          },
+          "descricao": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Descricao"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 90.0,
+                "minimum": -90.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 180.0,
+                "minimum": -180.0
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "prioridade": {
+            "type": "string",
+            "enum": [
+              "BAIXA",
+              "MEDIA",
+              "ALTA",
+              "CRITICA"
+            ],
+            "title": "Prioridade",
+            "default": "MEDIA"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id_usuario",
+          "descricao",
+          "latitude",
+          "longitude"
+        ],
+        "title": "OcorrenciaCreate"
+      },
+      "OcorrenciaResponse": {
+        "properties": {
+          "id_ocorrencia": {
+            "type": "integer",
+            "title": "Id Ocorrencia"
+          },
+          "protocolo": {
+            "type": "string",
+            "title": "Protocolo"
+          },
+          "id_usuario": {
+            "type": "integer",
+            "title": "Id Usuario"
+          },
+          "id_categoria": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id Categoria"
+          },
+          "id_status": {
+            "type": "integer",
+            "title": "Id Status"
+          },
+          "descricao": {
+            "type": "string",
+            "title": "Descricao"
+          },
+          "latitude": {
+            "type": "string",
+            "title": "Latitude"
+          },
+          "longitude": {
+            "type": "string",
+            "title": "Longitude"
+          },
+          "prioridade": {
+            "type": "string",
+            "title": "Prioridade"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Atualizado Em"
+          },
+          "categoria_nome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria Nome"
+          },
+          "status_nome": {
+            "type": "string",
+            "title": "Status Nome"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id_ocorrencia",
+          "protocolo",
+          "id_usuario",
+          "id_categoria",
+          "id_status",
+          "descricao",
+          "latitude",
+          "longitude",
+          "prioridade",
+          "criado_em",
+          "atualizado_em",
+          "categoria_nome",
+          "status_nome"
+        ],
+        "title": "OcorrenciaResponse"
+      },
+      "StatusCreate": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 2,
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "title": "Codigo"
+          },
+          "nome": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "ordem": {
+            "type": "integer",
+            "maximum": 32767.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Ordem"
+          },
+          "status_final": {
+            "type": "boolean",
+            "title": "Status Final",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "codigo",
+          "nome",
+          "ordem"
+        ],
+        "title": "StatusCreate"
+      },
+      "StatusResponse": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 2,
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "title": "Codigo"
+          },
+          "nome": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "ordem": {
+            "type": "integer",
+            "maximum": 32767.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Ordem"
+          },
+          "status_final": {
+            "type": "boolean",
+            "title": "Status Final",
+            "default": false
+          },
+          "id_status": {
+            "type": "integer",
+            "title": "Id Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "codigo",
+          "nome",
+          "ordem",
+          "id_status"
+        ],
+        "title": "StatusResponse"
+      },
+      "UsuarioCreate": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Nome"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 160,
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "title": "Email"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nome",
+          "email"
+        ],
+        "title": "UsuarioCreate"
+      },
+      "UsuarioResponse": {
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "title": "Id Usuario"
+          },
+          "nome": {
+            "type": "string",
+            "title": "Nome"
+          },
+          "perfil": {
+            "type": "string",
+            "title": "Perfil"
+          },
+          "ativo": {
+            "type": "boolean",
+            "title": "Ativo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id_usuario",
+          "nome",
+          "perfil",
+          "ativo"
+        ],
+        "title": "UsuarioResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
