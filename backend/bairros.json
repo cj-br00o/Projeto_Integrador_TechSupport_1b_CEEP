@@ -1,0 +1,47 @@
+[
+  {
+    "bairro": "Vila Nova",
+    "total_ocorrencias": 144,
+    "tempo_medio_resolucao_dias": 3.57
+  },
+  {
+    "bairro": "Jardim das Flores",
+    "total_ocorrencias": 143,
+    "tempo_medio_resolucao_dias": 3.36
+  },
+  {
+    "bairro": "Bairro Novo",
+    "total_ocorrencias": 131,
+    "tempo_medio_resolucao_dias": 3.42
+  },
+  {
+    "bairro": "Centro",
+    "total_ocorrencias": 130,
+    "tempo_medio_resolucao_dias": 3.24
+  },
+  {
+    "bairro": "São Lucas",
+    "total_ocorrencias": 121,
+    "tempo_medio_resolucao_dias": 3.35
+  },
+  {
+    "bairro": "Jardim América",
+    "total_ocorrencias": 118,
+    "tempo_medio_resolucao_dias": 3.07
+  },
+  {
+    "bairro": "Vila Esperança",
+    "total_ocorrencias": 113,
+    "tempo_medio_resolucao_dias": 3.3
+  },
+  {
+    "bairro": "Boa Vista",
+    "total_ocorrencias": 101,
+    "tempo_medio_resolucao_dias": 3.5
+  },
+  {
+    "bairro": "Vila do Morcego",
+    "total_ocorrencias": 1,
+    "tempo_medio_resolucao_dias": 4.0
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "total_ocorrencias": 1002,
+  "bairros_atendidos": 9,
+  "orgaos_responsaveis": 6,
+  "media_tempo_resolucao_dias": 3.35,
+  "mediana_tempo_resolucao_dias": 3.0,
+  "data_inicial": "2024-01-01",
+  "data_final": "2026-06-17",
+  "total_status": 1
+}

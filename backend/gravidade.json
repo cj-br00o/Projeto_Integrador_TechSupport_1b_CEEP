@@ -1,0 +1,14 @@
+[
+  {
+    "gravidade": "Média",
+    "total_ocorrencias": 477
+  },
+  {
+    "gravidade": "Baixa",
+    "total_ocorrencias": 353
+  },
+  {
+    "gravidade": "Alta",
+    "total_ocorrencias": 172
+  }
+]

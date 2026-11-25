@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Faça perguntas sobre os dados reais de ocorrências urbanas.">
+  <title>Radar Urbano | Radar IA</title>
+  <link rel="stylesheet" href="../static/style.css?v=radar-azul-v3">
+  <script src="../js/chat.js?v=radar-azul-v3" defer></script>
+</head>
+<body>
+<header class="cabecalho">
+  <div class="container cabecalho-conteudo">
+    <a class="identidade" href="dashboard.html">
+      <span class="marca-simbolo">R</span>
+      <span class="identidade-texto"><span class="marca">Radar Urbano</span><span class="subtitulo">INTELIGÊNCIA URBANA · PAINEL DE GESTÃO</span></span>
+    </a>
+    <nav class="navegacao-paginas" aria-label="Navegação principal">
+      <a class="link-nav" href="dashboard.html">Dashboard analítico</a>
+      <a class="link-nav" href="resumo.html">Resumo de dados</a>
+      <a class="link-nav ativo" href="chat.html" aria-current="page">Radar IA</a>
+    </nav>
+  </div>
+</header>
+<main class="container chat-layout">
+  <section class="chat-hero">
+    <p class="legenda">ASSISTENTE DE ANÁLISE URBANA</p>
+    <h1>Conheça melhor os dados da cidade.</h1>
+    <p>Digite uma pergunta sobre as ocorrências registradas. O Python consulta o CSV e calcula os resultados. O Ollama Local pode complementar a resposta com uma explicação.</p>
+  </section>
+
+  <section class="chat-card" aria-labelledby="titulo-chat">
+    <div class="chat-top">
+      <div>
+        <p class="legenda">CONSULTA À BASE REAL</p>
+        <h2 id="titulo-chat">Pergunte ao Radar IA</h2>
+        <p class="texto-apoio">Escreva sua pergunta no campo abaixo. Não precisa escolher em uma lista.</p>
+      </div>
+      <span id="chat-status-api" class="chat-status" role="status">Verificando conexão com a API…</span>
+    </div>
+    <div class="chat-corpo">
+      <section class="chat-sugestoes" aria-label="Perguntas sugeridas">
+        <p class="chat-field">Experimente perguntar</p>
+        <div class="chat-sugestoes-lista">
+          <button type="button" class="chat-sugestao">Qual bairro possui o maior número de ocorrências?</button>
+          <button type="button" class="chat-sugestao">Qual é o problema urbano mais frequente?</button>
+          <button type="button" class="chat-sugestao">Quantas ocorrências estão resolvidas?</button>
+          <button type="button" class="chat-sugestao">Como estão distribuídas por gravidade?</button>
+        </div>
+      </section>
+      <form id="chat-form" class="chat-form">
+        <label class="chat-field" for="chat-pergunta">Sua pergunta</label>
+        <textarea id="chat-pergunta" name="pergunta" rows="3" maxlength="500" required placeholder="Ex.: Qual bairro tem mais ocorrências?" autocomplete="off"></textarea>
+        <div class="chat-form-ajuda"><span>Você pode escrever com suas próprias palavras.</span><span id="chat-contador">0/500</span></div>
+        <button id="chat-enviar" class="chat-button" type="submit" disabled>Consultar dados <span aria-hidden="true">→</span></button>
+      </form>
+      <p id="chat-status" class="texto-apoio" role="status" aria-live="polite">Digite sua pergunta para começar.</p>
+      <article id="chat-resposta" class="chat-answer chat-hidden" aria-live="polite">
+        <p class="legenda">RESPOSTA DO RADAR IA</p>
+        <h2 id="chat-enunciado">Resultado da consulta</h2>
+        <div class="chat-result"><h3>Resultado calculado pelo Python</h3><ul id="chat-dados"></ul></div>
+        <div class="chat-result"><h3>Explicação do Ollama Local</h3><p id="chat-explicacao" class="chat-explicacao"></p></div>
+        <p id="chat-aviso" class="chat-warning chat-hidden" role="status"></p>
+      </article>
+    </div>
+  </section>
+  <p class="chat-note">As respostas numéricas são calculadas localmente pelo Python com os dados do CSV. O Ollama é opcional: se estiver desligado, o resultado calculado continua disponível.</p>
+  <footer class="rodape"><span><strong>Radar Urbano</strong> · Inteligência para a gestão urbana</span><span>Radar IA · Ollama Local</span></footer>
+</main>
+</body>
+</html>

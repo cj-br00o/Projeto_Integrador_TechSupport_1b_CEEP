@@ -1,63 +1,53 @@
-from analise import (
-    carregar_dados,
-    resumo_geral,
-    contar_por_coluna,
-    estatisticas_tempo_resolucao,
-    tempo_medio_por_tipo,
-    ocorrencias_por_bairro_e_tipo,
-    salvar_grafico,
-    preparar_prioridade,
+"""Aplicação FastAPI do Radar Urbano. Execute na raiz com backend.main:app."""
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from .controller.resumo import router as resumo_router
+from .controller.dashboard import router as dashboard_router
+from .controller.chat import router as chat_router
+
+app = FastAPI(
+    title="Radar Urbano - API de Dados",
+    description="Indicadores e consultas descritivas das ocorrências urbanas.",
+    version="2.0.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://127.0.0.1:5501",
+        "http://localhost:5501",
+        "http://127.0.0.1:5502",
+        "http://localhost:5502",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
-def main():
-    dados = carregar_dados()
-    resumo_geral(dados)
-
-    por_tipo = contar_por_coluna(dados, "tipo_problema")
-    por_bairro = contar_por_coluna(dados, "bairro")
-    por_status = contar_por_coluna(dados, "status")
-    por_gravidade = contar_por_coluna(dados, "gravidade")
-    por_orgao = contar_por_coluna(dados, "orgao_responsavel")
-
-    estatisticas_tempo_resolucao(dados)
-    tempo_medio = tempo_medio_por_tipo(dados)
-    ocorrencias_por_bairro_e_tipo(dados)
-
-    salvar_grafico(
-        por_tipo, "Ocorrências por tipo de problema",
-        "ocorrencias_por_tipo.png", "Tipo de problema"
-    )
-    salvar_grafico(
-        por_bairro, "Ocorrências por bairro",
-        "ocorrencias_por_bairro.png", "Bairro"
-    )
-    salvar_grafico(
-        por_status, "Ocorrências por status",
-        "ocorrencias_por_status.png", "Status"
-    )
-    salvar_grafico(
-        por_gravidade, "Ocorrências por gravidade",
-        "ocorrencias_por_gravidade.png", "Gravidade"
-    )
-    salvar_grafico(
-        por_orgao, "Ocorrências por órgão responsável",
-        "ocorrencias_por_orgao.png", "Órgão responsável"
-    )
-    salvar_grafico(
-        tempo_medio, "Tempo médio de resolução por tipo de problema",
-        "tempo_medio_por_tipo.png", "Tipo de problema", "Dias"
-    )
-
-    dados_classificados = preparar_prioridade(dados)
-    saida = (
-        __import__("pathlib").Path(__file__).resolve().parent.parent
-        / "documentacao" / "ocorrencias_com_gravidade_padronizada.csv"
-    )
-    dados_classificados.to_csv(saida, index=False)
-    print(f"\nArquivo de análise salvo em: {saida}")
-    print("\nAnálise do Radar Urbano concluída!")
+app.include_router(resumo_router)
+app.include_router(dashboard_router)
+app.include_router(chat_router)
 
 
-if __name__ == "__main__":
-    main()
+@app.get("/", tags=["Saúde"])
+def home():
+    return {"status": "ok", "mensagem": "API Radar Urbano funcionando.", "documentacao": "/docs"}
+
+
+@app.get("/health", tags=["Saúde"])
+def health():
+    return {"status": "healthy"}
+
+
+@app.exception_handler(FileNotFoundError)
+async def arquivo_nao_encontrado(request: Request, erro: FileNotFoundError):
+    return JSONResponse(status_code=503, content={"detail": "Arquivo CSV não encontrado na pasta database."})
+
+
+@app.exception_handler(ValueError)
+async def dados_invalidos(request: Request, erro: ValueError):
+    return JSONResponse(status_code=503, content={"detail": f"Não foi possível analisar o CSV: {erro}"})

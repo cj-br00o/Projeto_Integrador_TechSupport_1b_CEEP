@@ -1,0 +1,47 @@
+[
+  {
+    "tipo_problema": "Iluminação pública",
+    "total_ocorrencias": 128,
+    "media_tempo_resolucao_dias": 3.51
+  },
+  {
+    "tipo_problema": "Vazamento de água",
+    "total_ocorrencias": 123,
+    "media_tempo_resolucao_dias": 3.69
+  },
+  {
+    "tipo_problema": "Alagamento",
+    "total_ocorrencias": 118,
+    "media_tempo_resolucao_dias": 3.52
+  },
+  {
+    "tipo_problema": "Lixo acumulado",
+    "total_ocorrencias": 113,
+    "media_tempo_resolucao_dias": 3.29
+  },
+  {
+    "tipo_problema": "Semáforo com defeito",
+    "total_ocorrencias": 111,
+    "media_tempo_resolucao_dias": 3.33
+  },
+  {
+    "tipo_problema": "Calçada quebrada",
+    "total_ocorrencias": 109,
+    "media_tempo_resolucao_dias": 3.45
+  },
+  {
+    "tipo_problema": "Árvore caída",
+    "total_ocorrencias": 107,
+    "media_tempo_resolucao_dias": 3.24
+  },
+  {
+    "tipo_problema": "Buraco na rua",
+    "total_ocorrencias": 104,
+    "media_tempo_resolucao_dias": 2.99
+  },
+  {
+    "tipo_problema": "Placa danificada",
+    "total_ocorrencias": 89,
+    "media_tempo_resolucao_dias": 2.99
+  }
+]

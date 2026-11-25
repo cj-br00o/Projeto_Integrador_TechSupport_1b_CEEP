@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Resumo dos dados de ocorrências urbanas do Radar Urbano.">
+  <title>Radar Urbano | Resumo de Dados</title>
+  <link rel="stylesheet" href="../static/style.css?v=signature-pro">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/resumo-dados.js?v=signature-pro" defer></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <a class="identidade" href="dashboard.html" aria-label="Radar Urbano — página inicial">
+        <span class="marca-simbolo" aria-hidden="true">R</span>
+        <span class="identidade-texto"><span class="marca">Radar Urbano</span><span class="subtitulo">INTELIGÊNCIA URBANA · PAINEL DE GESTÃO</span></span>
+      </a>
+      <nav class="navegacao-paginas" aria-label="Navegação principal">
+        <a class="link-nav" href="dashboard.html">Dashboard analítico</a>
+        <a class="link-nav ativo" href="resumo.html" aria-current="page">Resumo de dados</a>
+        <a class="link-nav" href="chat.html">Radar IA</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container principal">
+    <section class="hero-resumo">
+      <div><p class="hero-etiqueta"><span class="hero-ponto"></span> EXPLORAÇÃO E CONSOLIDAÇÃO</p><h1>Detalhamento dos<br><span>dados urbanos.</span></h1><p>Consulte os indicadores consolidados e explore os registros por categoria e região.</p></div>
+      <div class="resumo-selo" aria-hidden="true"><span>RADAR</span><strong>RU</strong><small>DADOS &amp; ANÁLISE</small></div>
+    </section>
+    <div class="barra-resumo">
+      <div><p id="atualizacao-resumo" class="texto-apoio">Aguardando consulta à API...</p>
+      <p id="periodo-resumo" class="texto-apoio">Período dos registros: —</p></div>
+      <button id="atualizar-resumo" class="botao botao-principal" type="button">Atualizar dados</button>
+    </div>
+    <p id="mensagem-resumo" class="mensagem" role="status" aria-live="polite" hidden></p>
+    <section aria-labelledby="titulo-indicadores-resumo">
+      <h2 id="titulo-indicadores-resumo" class="titulo-secao">Indicadores gerais</h2>
+      <div class="indicadores">
+        <article class="indicador"><span class="indicador-icone">▦</span><h3>Total de ocorrências</h3><p id="r-total" class="indicador-valor">—</p></article>
+        <article class="indicador"><span class="indicador-icone">⌖</span><h3>Bairros registrados</h3><p id="r-bairros" class="indicador-valor">—</p></article>
+        <article class="indicador"><span class="indicador-icone">▤</span><h3>Órgãos responsáveis</h3><p id="r-orgaos" class="indicador-valor">—</p></article>
+        <article class="indicador"><span class="indicador-icone">◷</span><h3>Tempo médio de resolução</h3><p id="r-media" class="indicador-valor">—</p></article>
+        <article class="indicador"><span class="indicador-icone">◴</span><h3>Mediana de resolução</h3><p id="r-mediana" class="indicador-valor">—</p></article>
+      </div>
+    </section>
+    <section class="painel painel-evolucao" aria-labelledby="titulo-evolucao-resumo">
+      <div class="painel-titulo"><div><p class="legenda">TENDÊNCIA AO LONGO DO TEMPO</p><h2 id="titulo-evolucao-resumo">Evolução mensal das ocorrências</h2></div><span class="chip-analise">SÉRIE HISTÓRICA</span></div>
+      <p class="descricao-painel">A curva mostra como o volume de registros variou mês a mês. Passe o cursor pelos pontos para consultar os valores.</p>
+      <div id="resumo-grafico-meses" class="grafico-visual grafico-temporal" role="img" aria-label="Gráfico de onda com a evolução mensal das ocorrências"><p class="vazio">Aguardando dados da API...</p></div>
+      <p id="resumo-leitura-meses" class="leitura-grafico">A leitura do período aparecerá após o carregamento dos dados.</p>
+    </section>
+    <section class="grade-graficos resumo-graficos-categorias" aria-label="Distribuição por gravidade e status">
+      <article class="painel">
+        <div class="painel-titulo"><div><p class="legenda">NÍVEL DE ATENÇÃO</p><h2>Ocorrências por gravidade</h2></div></div>
+        <p class="descricao-painel">Comparação do volume registrado em cada nível.</p>
+        <div id="resumo-grafico-gravidade" class="grafico-barras"><p class="vazio">Aguardando dados...</p></div>
+      </article>
+      <article class="painel">
+        <div class="painel-titulo"><div><p class="legenda">SITUAÇÃO DOS REGISTROS</p><h2>Ocorrências por status</h2></div></div>
+        <p class="descricao-painel">Distribuição conforme a situação informada na base.</p>
+        <div id="resumo-grafico-status" class="grafico-barras"><p class="vazio">Aguardando dados...</p></div>
+      </article>
+    </section>
+    <section class="painel" aria-labelledby="titulo-problemas-resumo">
+      <div class="painel-titulo"><div><p class="legenda">DETALHAMENTO POR CATEGORIA</p><h2 id="titulo-problemas-resumo">Ocorrências por tipo de problema</h2></div></div>
+      <div class="tabela-container"><table>
+        <thead><tr><th>Tipo de problema</th><th class="numero">Ocorrências</th><th class="numero">Média de resolução (dias)</th></tr></thead>
+        <tbody id="tabela-problemas"><tr><td colspan="3" class="vazio">Aguardando dados da API...</td></tr></tbody>
+        <tfoot><tr><th>Total geral</th><td id="total-problemas-resumo" class="numero">—</td><td>—</td></tr></tfoot>
+      </table></div>
+    </section>
+    <section class="painel" aria-labelledby="titulo-bairros-resumo">
+      <div class="painel-titulo"><div><p class="legenda">DISTRIBUIÇÃO TERRITORIAL</p><h2 id="titulo-bairros-resumo">Ocorrências por bairro</h2></div></div>
+      <div class="tabela-container"><table>
+        <thead><tr><th>Bairro</th><th class="numero">Ocorrências</th><th class="numero">Média de resolução (dias)</th></tr></thead>
+        <tbody id="tabela-bairros"><tr><td colspan="3" class="vazio">Aguardando dados da API...</td></tr></tbody>
+      </table></div>
+    </section>
+    <p class="nota-dados">Os dados são consultados diretamente na API e calculados a partir do CSV. Os indicadores são descritivos.</p>
+    <footer class="rodape"><span><strong>Radar Urbano</strong> · Inteligência para a gestão urbana</span><span>Projeto de análise descritiva de dados</span></footer>
+  </main>
+</body>
+</html>

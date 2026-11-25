@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Painel de indicadores e ocorrências urbanas do Radar Urbano.">
+  <title>Radar Urbano | Dashboard Analítico</title>
+  <link rel="stylesheet" href="../static/style.css?v=signature-pro">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/resumo.js?v=signature-pro" defer></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <a class="identidade" href="dashboard.html" aria-label="Radar Urbano — página inicial">
+        <span class="marca-simbolo" aria-hidden="true">R</span>
+        <span class="identidade-texto"><span class="marca">Radar Urbano</span><span class="subtitulo">INTELIGÊNCIA URBANA · PAINEL DE GESTÃO</span></span>
+      </a>
+      <nav class="navegacao-paginas" aria-label="Navegação principal">
+        <a class="link-nav ativo" href="dashboard.html" aria-current="page">Dashboard analítico</a>
+        <a class="link-nav" href="resumo.html">Resumo de dados</a>
+        <a class="link-nav" href="chat.html">Radar IA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container principal">
+    <section class="hero-projeto" aria-labelledby="titulo-principal">
+      <div class="hero-conteudo">
+        <div class="hero-etiqueta"><span class="hero-ponto"></span> PLATAFORMA DE INTELIGÊNCIA URBANA</div>
+        <h1 id="titulo-principal">Dados que ajudam a<br><span>entender a cidade.</span></h1>
+        <p>Uma visão integrada das ocorrências urbanas para transformar registros em informação útil à gestão pública.</p>
+        <div class="hero-acoes"><a class="hero-link" href="#indicadores">Explorar indicadores <span aria-hidden="true">↓</span></a><span class="hero-nota">ANÁLISE · MONITORAMENTO · GESTÃO</span></div>
+      </div>
+      <div class="hero-grafismo" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="hero-grade"></div><div class="hero-sinal"><span>RADAR</span><strong>URBANO</strong><i></i></div></div>
+    </section>
+
+    <div class="barra-resumo">
+      <div>
+        <p id="atualizacao" class="texto-apoio">Aguardando consulta à API...</p>
+        <p id="periodo-dados" class="texto-apoio">Período dos registros: —</p>
+      </div>
+      <button id="botao-atualizar" class="botao botao-principal" type="button">Atualizar dados</button>
+    </div>
+    <p id="mensagem" class="mensagem" role="status" aria-live="polite" hidden></p>
+
+    <section id="resumo" aria-labelledby="titulo-indicadores" aria-busy="false">
+      <div id="indicadores" class="secao-cabecalho"><div><p class="legenda">PANORAMA DA BASE</p><h2 id="titulo-indicadores" class="titulo-secao">Indicadores em destaque</h2></div><span class="secao-descricao">Dados consolidados da plataforma</span></div>
+      <div class="indicadores">
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">▦</span>
+          <h3>Total de ocorrências</h3>
+          <p id="total-ocorrencias" class="indicador-valor">—</p>
+          <p class="texto-apoio">Chamados únicos registrados.</p>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">⌖</span>
+          <h3>Bairros registrados</h3>
+          <p id="total-bairros" class="indicador-valor">—</p>
+          <p class="texto-apoio">Bairros com ocorrências.</p>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">▤</span>
+          <h3>Órgãos responsáveis</h3>
+          <p id="total-orgaos" class="indicador-valor">—</p>
+          <p class="texto-apoio">Órgãos envolvidos nos registros.</p>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">◷</span>
+          <h3>Tempo médio de resolução</h3>
+          <p id="media-resolucao" class="indicador-valor">—</p>
+          <p class="texto-apoio">Dias, conforme a base.</p>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">◴</span>
+          <h3>Mediana de resolução</h3>
+          <p id="mediana-resolucao" class="indicador-valor">—</p>
+          <p class="texto-apoio">Dias, valor central.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="secao-cabecalho secao-graficos"><div><p class="legenda">LEITURA VISUAL</p><h2 class="titulo-secao">Comportamento das ocorrências</h2></div><span class="secao-descricao">Evolução e distribuição dos registros</span></div>
+    <section class="grade-graficos" aria-label="Gráficos de ocorrências">
+      <article class="painel">
+        <div class="painel-titulo">
+          <div><p class="legenda">EVOLUÇÃO TEMPORAL</p><h2>Ocorrências por mês</h2></div>
+        </div>
+        <p class="descricao-painel">Quantidade de chamados registrados em cada mês.</p>
+        <div id="grafico-meses" class="grafico-barras" aria-live="polite"><p class="vazio">Aguardando dados...</p></div>
+      </article>
+      <article class="painel">
+        <div class="painel-titulo">
+          <div><p class="legenda">CLASSIFICAÇÃO</p><h2>Ocorrências por gravidade</h2></div>
+        </div>
+        <p class="descricao-painel">Distribuição dos registros por nível de gravidade.</p>
+        <div id="grafico-gravidade" class="grafico-barras"><p class="vazio">Aguardando dados...</p></div>
+      </article>
+      <article class="painel">
+        <div class="painel-titulo">
+          <div><p class="legenda">ACOMPANHAMENTO</p><h2>Ocorrências por status</h2></div>
+        </div>
+        <p class="descricao-painel">Distribuição conforme a situação informada no CSV.</p>
+        <div id="grafico-status" class="grafico-barras"><p class="vazio">Aguardando dados...</p></div>
+      </article>
+    </section>
+
+    <section class="painel painel-insights" aria-labelledby="titulo-insights">
+      <div class="painel-titulo">
+        <div><p class="legenda">LEITURA DOS DADOS</p><h2 id="titulo-insights">Destaques da análise</h2></div>
+      </div>
+      <p class="descricao-painel">Resumo automático dos maiores valores encontrados nas consultas. Os destaques descrevem os registros e não representam previsões.</p>
+      <div id="lista-insights" class="lista-insights" aria-live="polite">
+        <p class="vazio">Aguardando dados da API...</p>
+      </div>
+    </section>
+
+    <section class="painel" aria-labelledby="titulo-problemas">
+      <div class="painel-titulo">
+        <div><p class="legenda">DETALHAMENTO</p><h2 id="titulo-problemas">Ocorrências por tipo de problema</h2></div>
+      </div>
+      <p class="descricao-painel">Volume de chamados e média de tempo de resolução por categoria.</p>
+      <div class="tabela-container">
+        <table>
+          <thead><tr><th scope="col">Tipo de problema</th><th scope="col" class="numero">Ocorrências</th><th scope="col" class="numero">Média (dias)</th></tr></thead>
+          <tbody id="lista-problemas"><tr><td colspan="3" class="vazio">Aguardando dados da API...</td></tr></tbody>
+          <tfoot><tr><th scope="row">Total geral</th><td id="total-geral-problemas" class="numero">—</td><td>—</td></tr></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="painel" aria-labelledby="titulo-bairros">
+      <div class="painel-titulo">
+        <div><p class="legenda">DISTRIBUIÇÃO TERRITORIAL</p><h2 id="titulo-bairros">Ocorrências por bairro</h2></div>
+      </div>
+      <p class="descricao-painel">Bairros ordenados pelo maior número de registros.</p>
+      <div class="tabela-container">
+        <table>
+          <thead><tr><th scope="col">Bairro</th><th scope="col" class="numero">Ocorrências</th><th scope="col" class="numero">Média (dias)</th></tr></thead>
+          <tbody id="lista-bairros"><tr><td colspan="3" class="vazio">Aguardando dados da API...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="nota-dados">Os resultados representam os registros presentes no CSV. Indicadores descritivos não representam previsão nem avaliação automática da qualidade do atendimento.</p>
+    <footer class="rodape"><span><strong>Radar Urbano</strong> · Inteligência para a gestão urbana</span><span>Projeto de análise descritiva de dados</span></footer>
+  </main>
+</body>
+</html>
